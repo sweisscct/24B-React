@@ -23,32 +23,46 @@
     const App = function app() {
       // [variable, functionToChangeVariable] = useState(initial value of variable)
       const [count, incrementCount] = useState(0);
+      // in vanilla JS
+      // let count = 0
+      // function incrementCount() { count += 1; } // This is not a good idea!
+
+      // function incrementCount() { setCount(count + 1); } // This is a good idea!
 
       function buttonClick() {
         incrementCount(count + 1);
+      }
+
+      const paragraphs = [];
+      for (let i=0; i<10; i++) {
+        paragraphs.push(<Paragraph key={i} />);
       }
 
       return (
         <div>
           <h1>Welcome to the website!</h1>
           <p>Hope you enjoy it.</p>
-          <CountButton count={count} onClick={buttonClick}/>
-          <Paragraph />
-          <Paragraph />
-          <Paragraph />
+          <CountButton count_component={count} buttonClick_component={buttonClick}/>
+          <Paragraph key={"a"} />
+          <Paragraph key={"b"}/>
+          <Paragraph key={11}/>
+          // Mistake in buttonClick on purpose
+          <CountButton count_component={count} buttonClick={buttonClick}/>
+          {paragraphs}
         </div>
       )
     }
 
-    function Paragraph() {
+
+    function Paragraph({key}) {
       return(
-        <p>This is a paragraph!</p>
+        <p>This is a paragraph! This is paragraph number: {key}</p>
       )
     }
 
-    function CountButton( {count, onClick} ) {
+    function CountButton( {count_component, buttonClick_component} ) {
       return(
-        <button onClick={onClick}>Clicked {count} times!</button>
+        <button onClick={buttonClick_component}>Clicked {count_component} times!</button>
       )
     }
 
