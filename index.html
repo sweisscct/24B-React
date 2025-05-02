@@ -42,6 +42,11 @@
       // function incrementCount() { count += 1; } // This is not a good idea!
 
       // function incrementCount() { setCount(count + 1); } // This is a good idea!
+      const [imageIndex, changeImageIndex] = useState(0);
+
+      function changeImage() {
+        changeImageIndex( (imageIndex+1)%imageDataArray.length )
+      }
 
       function buttonClick() {
         incrementCount(count + 1);
@@ -74,6 +79,21 @@
         musicComponents.push(<DataMusic Music={songSelection}/>);
       })
 
+      const imageDataArray = [
+        { 
+          src: "img1.png",
+          alt: "Cool image 1"
+         },
+         { 
+          src: "img2.png",
+          alt: "Cool image 2"
+         },
+         { 
+          src: "img3.png",
+          alt: "Cool image 3"
+         }
+      ];
+
       return (
         <div>
           <h1>Welcome to the website!</h1>
@@ -84,6 +104,8 @@
           <Paragraph paragraphNum={11}/>
           // Mistake in buttonClick on purpose
           <CountButton count_component={count} buttonClick_component={decrementCount}/>
+          <ImageComponent Image={imageDataArray[imageIndex]} />
+          <ChangeImageButton buttonClick={changeImage}/>
           {musicComponents}
           {paragraphs}
         </div>
@@ -111,6 +133,19 @@
           <li>Rating: {Music.rating}/5</li>
         </ul>
       )
+    }
+
+    function ImageComponent( {Image} ) {
+      return(
+        <img src={Image.src} alt={Image.alt}/>
+      )
+    }
+
+    function ChangeImageButton( {buttonClick} ) {
+      return(
+        <button onClick={buttonClick}>Change Image</button>
+      )
+      
     }
 
 
