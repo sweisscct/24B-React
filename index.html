@@ -33,30 +33,53 @@
         incrementCount(count + 1);
       }
 
+      function decrementCount() {
+        incrementCount(count - 1);
+      }
+
       const paragraphs = [];
       for (let i=0; i<10; i++) {
-        paragraphs.push(<Paragraph key={i} />);
+        paragraphs.push(<Paragraph key={i} paragraphNum={i} />);
       }
+
+      const dataMusicArray = [
+        // song, artist, rating
+        { song: "Never Gonna Give You Up",
+          artist: "Rick Astley",
+          rating: 5
+        },
+        { song: "Billie Jean", artist: "Michael Jackson", rating: 5 },
+        { song: "Come and Get Your Love", artist: "Red Bone", rating: 4 },
+        { song: "Stuck in the Middle With You", artist: "I don't know", rating: 3 }
+      ]
+
+      const musicComponents = [];
+      // for (let i=0; i<dataMusicArray.length; i++)
+
+      dataMusicArray.forEach(songSelection => {
+        musicComponents.push(<DataMusic Music={songSelection}/>);
+      })
 
       return (
         <div>
           <h1>Welcome to the website!</h1>
           <p>Hope you enjoy it.</p>
           <CountButton count_component={count} buttonClick_component={buttonClick}/>
-          <Paragraph key={"a"} />
-          <Paragraph key={"b"}/>
-          <Paragraph key={11}/>
+          <Paragraph paragraphNum={"a"} />
+          <Paragraph paragraphNum={"b"}/>
+          <Paragraph paragraphNum={11}/>
           // Mistake in buttonClick on purpose
-          <CountButton count_component={count} buttonClick={buttonClick}/>
+          <CountButton count_component={count} buttonClick_component={decrementCount}/>
+          {musicComponents}
           {paragraphs}
         </div>
       )
     }
 
 
-    function Paragraph({key}) {
+    function Paragraph({paragraphNum}) {
       return(
-        <p>This is a paragraph! This is paragraph number: {key}</p>
+        <p>This is a paragraph! This is paragraph number: {paragraphNum}</p>
       )
     }
 
@@ -65,6 +88,20 @@
         <button onClick={buttonClick_component}>Clicked {count_component} times!</button>
       )
     }
+
+    function DataMusic( {Music} ) {
+      return(
+        <ul>
+          <li>Song: {Music.song}</li>
+          <li>Artist: {Music.artist}</li>
+          <li>Rating: {Music.rating}/5</li>
+        </ul>
+      )
+    }
+
+
+
+
 
     const root = createRoot(document.getElementById("root"));
     root.render(
